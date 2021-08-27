@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MVVMDemo</string>
+
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="error_no_internet">There is not Internet</string>
+    <string name="error_empty_list_explanation">List is empty
+        \n\nSwipe down the screen to get users</string>
+
+    <string name="info">Info</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="position">Position</string>
+    <string name="name">NAME</string>
+    <string name="details">DETAILS</string>
+    <string name="author_name">AUTHOR</string>
+    <string name="starts_count">STARS</string>
+    <string name="forks_count">FORKS</string>
+
+    <string name="search_title">Search</string>
+    <string name="content_description_menu_item">menu item</string>
+
+</resources>

@@ -1,0 +1,75 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText" >
+
+    <item android:id="@+id/menu_item_1_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="@string/search_title"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="collapseActionView|ifRoom"
+        android:orderInCategory="1" />
+
+
+    <!--SORT-->
+    <item android:id="@+id/menu_item_10"
+        android:title="Sort by Name (01aA...01zZ)"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_item_11"
+        android:title="Sort by author (01aA...01zZ)"
+        android:orderInCategory="11"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_item_12"
+        android:title="Sort by forks  (+...-)"
+        android:orderInCategory="12"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_item_13"
+        android:title="Sort by starts (+...-)"
+        android:orderInCategory="13"
+        app:showAsAction="never"/>
+
+
+
+    <!--DELETE-->
+    <item android:id="@+id/menu_item_20"
+        android:title="Delete All"
+        android:orderInCategory="20"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_delete" />
+
+    <item android:id="@+id/menu_item_21"
+        android:title="Delete All Cache"
+        android:orderInCategory="21"
+        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_delete" />
+
+
+    <!--LOG-->
+    <item android:id="@+id/menu_item_30"
+        android:title="Show Logs"
+        android:orderInCategory="30"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_item_31"
+        android:title="Clear Logs"
+        android:orderInCategory="31"
+        app:showAsAction="never" />
+
+
+
+    <!--ACTIVITIES-->
+    <item android:id="@+id/menu_item_40"
+        android:title="Main Activity"
+        android:orderInCategory="40"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_item_41"
+        android:title="Main Drawer Activity"
+        android:orderInCategory="41"
+        app:showAsAction="never" />
+</menu>
