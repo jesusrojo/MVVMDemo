@@ -138,9 +138,18 @@ class FirstFragment : Fragment() {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+
+                    DebugHelp.l("onScrolled $dy uiDataAdapter.itemCount ${uiDataAdapter.itemCount}")
+                    DebugHelp.l("isGoneProgressBar() ${isGoneProgressBar()} " +
+                            "lastPosition ${llm.findLastCompletelyVisibleItemPosition()} " +
+                            "lastPosition2 ${llm.findLastVisibleItemPosition()}"
+                    )
                     if (dy > 0) {
                         val childCount = uiDataAdapter.itemCount
-                        val lastPosition = llm.findLastCompletelyVisibleItemPosition()
+                        //FAIL WITH NEWS
+                        // val lastPosition = llm.findLastCompletelyVisibleItemPosition()
+                        val lastPosition = llm.findLastVisibleItemPosition()
+
                         if (childCount - 1 == lastPosition && isGoneProgressBar()) {
                             onScrollToLastPositionRecyclerAction()
                         }

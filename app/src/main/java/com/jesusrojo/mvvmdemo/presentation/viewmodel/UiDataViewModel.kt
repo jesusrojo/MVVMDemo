@@ -16,7 +16,7 @@ class UiDataViewModel(
     private val deleteAllUseCase: DeleteAllUseCase,
     private val deleteAllCacheUseCase: DeleteAllCacheUseCase,
     private val ioDispatcher: CoroutineDispatcher,
-    private val savedStateHandle: SavedStateHandle
+   //TODO private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val vmScope = viewModelScope
@@ -33,7 +33,7 @@ class UiDataViewModel(
 
     init{
         DebugHelp.l("init viewModel")
-        query = savedStateHandle["QUERY"] ?: defaultQuery //todo implement
+       // query = savedStateHandle["QUERY"] ?: defaultQuery
     }
     override fun onCleared() {
         fetchDatasJob?.cancel()
