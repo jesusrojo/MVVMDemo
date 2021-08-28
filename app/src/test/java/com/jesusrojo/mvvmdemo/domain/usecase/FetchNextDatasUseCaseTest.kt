@@ -22,18 +22,18 @@ class FetchNextDatasUseCaseTest {
     @Test
     fun execute_callRepository() = runBlockingTest {
 
-        sut.execute(page, query)
+        sut.execute(query)
 
-        verify(repository, times(1)).fetchNextDatas(page, query)
+        verify(repository, times(1)).fetchNextDatas(query)
     }
 
     @Test
     fun execute_callRepository_listOK() = runBlockingTest {
 
         val datas = FakeRepository.getFakeListItemsOneTwo()
-        whenever(repository.fetchNextDatas(page, query)).thenReturn(Resource.Success(datas))
+        whenever(repository.fetchNextDatas(query)).thenReturn(Resource.Success(datas))
 
-        val results = sut.execute(page, query)
+        val results = sut.execute(query)
 
         Truth.assertThat(results.data).isEqualTo(datas)
         Truth.assertThat(results.data?.size).isEqualTo(datas.size)

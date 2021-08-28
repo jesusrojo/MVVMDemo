@@ -6,9 +6,9 @@ import com.jesusrojo.mvvmdemo.util.Resource
 
 import javax.inject.Inject
 
-class FetchDatasUseCase @Inject constructor(
+class RefreshDatasUseCase @Inject constructor(
     private val repository: UiDataRepository
 ) {
     suspend fun execute(query: String): Resource<List<UiData>> =
-        repository.fetchDatas(query)
+        repository.refreshDatas(query)
 }

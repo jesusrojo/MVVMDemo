@@ -118,7 +118,7 @@ class UiDataViewModelTestMock: BaseUnitTest() {
     fun `fetch datas return success with expected data`() = runBlockingTest {
         // Given
         val expectedDatas = Resource.Success(FakeRepository.getFakeListItemsOneTwo())
-        given(fetchUseCaseMock.execute(page,query)).willReturn(expectedDatas)
+        given(fetchUseCaseMock.execute(query)).willReturn(expectedDatas)
 
         // When
         sutMock.fetchDatas()
@@ -137,7 +137,7 @@ class UiDataViewModelTestMock: BaseUnitTest() {
     @Test  fun `fetch datas return success with expected data FAIL`() = runBlockingTest {
 
         val expectedDatas = Resource.Success(FakeRepository.getFakeListItemsOneTwo())
-        given(fetchUseCaseMock.execute(page, query)).willReturn(expectedDatas)
+        given(fetchUseCaseMock.execute(query)).willReturn(expectedDatas)
 
         val actualResource = sutMock.resourceUiDatas
         sutMock.fetchDatas()
@@ -149,7 +149,7 @@ class UiDataViewModelTestMock: BaseUnitTest() {
     @Test
     fun `fetch datas should return exception`() = runBlockingTest {
         // Given
-        given(fetchUseCaseMock.execute(page, query)).willThrow(RuntimeException("Exception"))
+        given(fetchUseCaseMock.execute(query)).willThrow(RuntimeException("Exception"))
         ////  `when`(fetchUseCaseMock.execute(page)).thenThrow(RuntimeException("Exception"))
 
         // When

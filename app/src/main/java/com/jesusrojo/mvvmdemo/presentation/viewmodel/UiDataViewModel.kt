@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jesusrojo.mvvmdemo.data.model.UiData
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllCacheUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchDatasUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchNextDatasUseCase
+import com.jesusrojo.mvvmdemo.domain.usecase.*
 import com.jesusrojo.mvvmdemo.util.DebugHelp
 import com.jesusrojo.mvvmdemo.util.Resource
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,6 +15,7 @@ import kotlinx.coroutines.launch
 class UiDataViewModel(
     private val fetchDatasUseCase: FetchDatasUseCase,
     private val fetchNextDatasUseCase: FetchNextDatasUseCase,
+    private val refreshDatasUseCase: RefreshDatasUseCase,
     private val deleteAllUseCase: DeleteAllUseCase,
     private val deleteAllCacheUseCase: DeleteAllCacheUseCase,
     private val ioDispatcher: CoroutineDispatcher
@@ -29,7 +27,6 @@ class UiDataViewModel(
     private var refreshDatasJob: Job? = null
     private var deleteAllJob: Job? = null
     private var deleteAllCacheJob: Job? = null
-    private var page = 1
     private val defaultQuery = "Kotlin"
     var query = defaultQuery // public, we use it to setDefaultQuery in searchView
 
@@ -39,7 +36,6 @@ class UiDataViewModel(
     init{
         DebugHelp.l("init viewModel")
         // query = saveStateHandler todo implement
-        // page = saveStateHandler
     }
     override fun onCleared() {
         fetchDatasJob?.cancel()
@@ -58,7 +54,20 @@ class UiDataViewModel(
         fetchDatasJob?.cancel()
         fetchDatasJob = vmScope.launch(ioDispatcher) {
             try {
-                val resourceResult = fetchDatasUseCase.execute(page, query)
+                val resourceResult = fetchDatasUseCase.execute(query)
+                _resourceUiDatas.postValue(resourceResult)
+            } catch (e: Exception) {
+                _resourceUiDatas.postValue(Resource.Error("Error $e"))
+            }
+        }
+    }
+
+    fun fetchNextDatas() {
+        _resourceUiDatas.postValue(Resource.Loading(null))
+        fetchNextDatasJob?.cancel()
+        fetchNextDatasJob = vmScope.launch(ioDispatcher) {
+            try {
+                val resourceResult = fetchNextDatasUseCase.execute(query)
                 _resourceUiDatas.postValue(resourceResult)
             } catch (e: Exception) {
                 _resourceUiDatas.postValue(Resource.Error("Error $e"))
@@ -67,35 +76,19 @@ class UiDataViewModel(
     }
 
     fun refreshDatas() {
-        page = 1
         refreshDatasJob?.cancel()
         refreshDatasJob = vmScope.launch(ioDispatcher) {
             try {
-                deleteAllUseCase.execute()
+                val resourceResult = refreshDatasUseCase.execute(query)
+                _resourceUiDatas.postValue(resourceResult)
+            } catch (e: Exception) {
+                _resourceUiDatas.postValue(Resource.Error("Error $e"))
+            }
+        }
+    }
 
-                val resourceResult = fetchNextDatasUseCase.execute(page, query)
-                _resourceUiDatas.postValue(resourceResult)
-            } catch (e: Exception) {
-                _resourceUiDatas.postValue(Resource.Error("Error $e"))
-            }
-        }
-    }
-    fun fetchNextDatas() {
-        page++
-        _resourceUiDatas.postValue(Resource.Loading(null))
-        fetchNextDatasJob?.cancel()
-        fetchNextDatasJob = vmScope.launch(ioDispatcher) {
-            try {
-                val resourceResult = fetchNextDatasUseCase.execute(page, query)
-                _resourceUiDatas.postValue(resourceResult)
-            } catch (e: Exception) {
-                _resourceUiDatas.postValue(Resource.Error("Error $e"))
-            }
-        }
-    }
 
     fun deleteAll() {
-        page = 1
         deleteAllJob?.cancel()
         deleteAllJob = vmScope.launch(ioDispatcher) {
             try {
@@ -108,7 +101,6 @@ class UiDataViewModel(
     }
 
     fun deleteAllCache() {
-        page = 1
         deleteAllCacheJob?.cancel()
         deleteAllCacheJob = vmScope.launch(ioDispatcher) {
             try {
