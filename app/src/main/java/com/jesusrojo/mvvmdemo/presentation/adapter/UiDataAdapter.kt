@@ -42,6 +42,8 @@ class UiDataAdapter(
         notifyDataSetChanged()
     }
 
+
+    // SORT
     fun orderByName() {
         values.sortWith(
             compareBy(String.CASE_INSENSITIVE_ORDER, { it.name })

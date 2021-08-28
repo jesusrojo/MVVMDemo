@@ -85,7 +85,7 @@ class FirstFragment : Fragment() {
 
     private fun onClickAdapterItemMenu(data: UiData) {
       DetailsDialogFragment.showInfoDialogFragment(
-             requireActivity() as AppCompatActivity,data.avatarUrl,data.toString())
+             requireActivity() as AppCompatActivity, data.avatarUrl, data.toString()) // _UP
     }
 
     //VIEW MODEL

@@ -1,9 +1,6 @@
 package com.jesusrojo.mvvmdemo.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.jesusrojo.mvvmdemo.data.model.UiData
 import com.jesusrojo.mvvmdemo.domain.usecase.*
 import com.jesusrojo.mvvmdemo.util.DebugHelp
@@ -18,7 +15,8 @@ class UiDataViewModel(
     private val refreshDatasUseCase: RefreshDatasUseCase,
     private val deleteAllUseCase: DeleteAllUseCase,
     private val deleteAllCacheUseCase: DeleteAllCacheUseCase,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val vmScope = viewModelScope
@@ -35,7 +33,7 @@ class UiDataViewModel(
 
     init{
         DebugHelp.l("init viewModel")
-        // query = saveStateHandler todo implement
+        query = savedStateHandle["QUERY"] ?: defaultQuery //todo implement
     }
     override fun onCleared() {
         fetchDatasJob?.cancel()

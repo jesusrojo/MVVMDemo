@@ -10,7 +10,7 @@ import com.jesusrojo.mvvmdemo.domain.repository.UiDataRepository
 import com.jesusrojo.mvvmdemo.util.Resource
 import retrofit2.Response
 
-class FakeRepository : UiDataRepository {
+class FakeRepository: UiDataRepository {
 
     private var datas = mutableListOf<UiData>()
 

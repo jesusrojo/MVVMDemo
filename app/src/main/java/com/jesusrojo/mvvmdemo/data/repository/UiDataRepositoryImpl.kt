@@ -83,7 +83,7 @@ class UiDataRepositoryImpl @Inject constructor(
 
     private suspend fun fetchFromAPI(query: String): Resource<List<UiData>> {
         return try {
-            val apiQuery = "$query$IN_QUALIFIER"
+            val apiQuery = "$query$IN_QUALIFIER" // _UP
             DebugHelp.l("fetchFromAPI $pageCount, apiQuery $apiQuery")
             val response = remoteDataSource.fetchAllApi(pageCount, apiQuery)
             handleResponse(response)

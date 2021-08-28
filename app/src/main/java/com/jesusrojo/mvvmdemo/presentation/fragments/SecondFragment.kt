@@ -44,7 +44,7 @@ class SecondFragment : Fragment() {
         binding.textViewExplanationDetails.text = textUi
 
         // AVATAR
-        val avatarUrl = data.avatarUrl
+        val avatarUrl = data.avatarUrl // _UP
         loadImageCircleGlide(binding.textViewExplanationDetails, avatarUrl)
     }
 
