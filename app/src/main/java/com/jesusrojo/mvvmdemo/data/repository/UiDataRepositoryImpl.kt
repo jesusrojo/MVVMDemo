@@ -20,6 +20,9 @@ class UiDataRepositoryImpl @Inject constructor(
     private val mapperRawToUiData: MapperRawToUiData
 ) : UiDataRepository {
 
+    private var pageCount = 1
+
+
     override suspend fun fetchDatas(page: Int, query: String): Resource<List<UiData>> {
         DebugHelp.l("fetchDatas $page $query")
         return fetchFromCache(page, query)
@@ -65,8 +68,11 @@ class UiDataRepositoryImpl @Inject constructor(
     private suspend fun fetchFromAPI(page: Int, query: String): Resource<List<UiData>> {
         DebugHelp.l("fetchFromAPI")
         return try {
+            pageCount++
+            DebugHelp.l("fetchFromAPI $pageCount")
+
             val apiQuery = "$query$IN_QUALIFIER"
-            val response = remoteDataSource.fetchAllApi(page, apiQuery)
+            val response = remoteDataSource.fetchAllApi(pageCount, apiQuery)
             handleResponse(response)
         } catch (exception: Exception) {
             val message = exception.message.toString()
@@ -80,12 +86,14 @@ class UiDataRepositoryImpl @Inject constructor(
         return if (response.isSuccessful) {
             val body = response.body()
             val rawResults = body?.rawDatas
-            if (rawResults != null) {
+            if (rawResults != null && rawResults.isNotEmpty()) {
                 val uiDatas = mapperRawToUiData(rawResults)
                 localDataSource.deleteAllInDB()
                 localDataSource.saveAllToDB(uiDatas)
                 Resource.Success(uiDatas)
             } else {
+                pageCount--
+                if(pageCount == 0) pageCount =1
                 Resource.Error("Error: rawResults null")
             }
         } else {

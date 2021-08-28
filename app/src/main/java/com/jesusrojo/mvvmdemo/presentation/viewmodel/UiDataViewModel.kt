@@ -38,7 +38,7 @@ class UiDataViewModel(
 
     init{
         DebugHelp.l("init viewModel")
-        // query = saveStateHandler todo implement
+        // query = saveStateHandler todo implement or move
         // page = saveStateHandler
     }
     override fun onCleared() {
