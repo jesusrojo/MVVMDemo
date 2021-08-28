@@ -23,18 +23,18 @@ class FetchDatasUseCaseTest {
     @Test
     fun execute_callRepository() = runBlockingTest { // coroutinesTestRule.testDispatcher.runBlockingTest {
 
-        sut.execute(page, query)
+        sut.execute(query)
 
-        verify(repository, times(1)).fetchDatas(page, query)
+        verify(repository, times(1)).fetchDatas(query)
     }
 
     @Test
     fun execute_callRepository_listOK() = runBlockingTest {
 
             val datas = FakeRepository.getFakeListItemsOneTwo()
-            whenever(repository.fetchDatas(page, query)).thenReturn(Resource.Success(datas))
+            whenever(repository.fetchDatas(query)).thenReturn(Resource.Success(datas))
 
-            val results = sut.execute(page, query)
+            val results = sut.execute(query)
 
             assertThat(results.data).isEqualTo(datas)
             assertThat(results.data?.size).isEqualTo(datas.size)

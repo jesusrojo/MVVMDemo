@@ -43,14 +43,14 @@ class UiDataRepositoryImplTest {
     fun fetchDatas_call_fetchAllFromCache() =
         ////  coroutinesTestRule.testDispatcher.runBlockingTest {
         runBlockingTest {
-            sut.fetchDatas(page, query)
+            sut.fetchDatas(query)
             verify(cacheDataSource, times(1)).fetchAllFromCache()
         }
 
 
     @Test
     fun fetchNextDatas_call_fetchAllApi() = runBlockingTest {
-        sut.fetchNextDatas(page, query)
+        sut.fetchNextDatas(query)
         verify(remoteDataSource, times(1)).fetchAllApi(page,
             query + "in:name,description") //IN_QUALIFIER
     }
@@ -78,7 +78,7 @@ class UiDataRepositoryImplTest {
         val datas = FakeRepository.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(datas)
 
-        val resourceResult = sut.fetchDatas(page, query)
+        val resourceResult = sut.fetchDatas(query)
 
         assertThat(resourceResult.data!![0].name).isEqualTo(datas[0].name)
         verify(cacheDataSource, times(1)).fetchAllFromCache()
@@ -91,7 +91,7 @@ class UiDataRepositoryImplTest {
         val datas = FakeRepository.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(datas)
 
-        val resourceResult = sut.fetchDatas(page, query)
+        val resourceResult = sut.fetchDatas(query)
 
         assertThat(resourceResult.data!![0].name).isEqualTo(datas[0].name)
         verify(cacheDataSource, times(1)).fetchAllFromCache()
@@ -104,7 +104,7 @@ class UiDataRepositoryImplTest {
         val datas = FakeRepository.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(datas)
 
-        val results = sut.fetchDatas(page, query)
+        val results = sut.fetchDatas(query)
 
         assertThat(results.data).isEqualTo(datas)
         verify(cacheDataSource, times(1)).fetchAllFromCache()
@@ -115,7 +115,7 @@ class UiDataRepositoryImplTest {
         val datas = FakeRepository.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(null)
         whenever(localDataSource.fetchAllInDB()).thenReturn(datas)
-        sut.fetchDatas(page, query)
+        sut.fetchDatas(query)
         verify(cacheDataSource, times(1)).fetchAllFromCache()
         verify(localDataSource, times(1)).fetchAllInDB()
     }
@@ -128,7 +128,7 @@ class UiDataRepositoryImplTest {
             whenever(localDataSource.fetchAllInDB()).thenReturn(null)
             whenever(remoteDataSource.fetchAllApi(page, query)).thenReturn(null)
 
-            val resourceResult = sut.fetchDatas(page, query)
+            val resourceResult = sut.fetchDatas(query)
 
             assertThat(resourceResult.data).isNull()
             verify(cacheDataSource, times(1)).fetchAllFromCache()
@@ -145,7 +145,7 @@ class UiDataRepositoryImplTest {
             whenever(localDataSource.fetchAllInDB()).thenReturn(null)
             whenever(remoteDataSource.fetchAllApi(page, query)).thenReturn(response)
 
-            val resourceResult = sut.fetchDatas(page, query)
+            val resourceResult = sut.fetchDatas(query)
 
            // assertThat(resourceResult.data).isNotNull() //todo fail
             //  assertThat(resourceResult.data!![0].name).isEqualTo(datas[0].name)

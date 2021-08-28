@@ -1,9 +1,6 @@
 package com.jesusrojo.mvvmdemo.presentation.di.hilt
 
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllCacheUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchDatasUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchNextDatasUseCase
+import com.jesusrojo.mvvmdemo.domain.usecase.*
 import com.jesusrojo.mvvmdemo.presentation.viewmodel.UiDataViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -22,6 +19,7 @@ class ViewModelFactoryModule {
     fun provideMyViewModelFactory(
         fetchDatasUseCase: FetchDatasUseCase,
         fetchNextDatasUseCase: FetchNextDatasUseCase,
+        refreshDatasUseCase: RefreshDatasUseCase,
         deleteAllUseCase: DeleteAllUseCase,
         deleteAllCacheUseCase: DeleteAllCacheUseCase,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -29,6 +27,7 @@ class ViewModelFactoryModule {
         return UiDataViewModelFactory(
             fetchDatasUseCase,
             fetchNextDatasUseCase,
+            refreshDatasUseCase,
             deleteAllUseCase,
             deleteAllCacheUseCase,
             ioDispatcher

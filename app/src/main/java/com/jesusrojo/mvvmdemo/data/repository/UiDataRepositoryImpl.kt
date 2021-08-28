@@ -22,18 +22,34 @@ class UiDataRepositoryImpl @Inject constructor(
 
     private var pageCount = 1
 
+    private fun increasePageCount() { pageCount++ }
 
-    override suspend fun fetchDatas(page: Int, query: String): Resource<List<UiData>> {
-        DebugHelp.l("fetchDatas $page $query")
-        return fetchFromCache(page, query)
+    private fun decreasePageCount() {
+        pageCount--
+        if (pageCount <= 0) pageCount = 1
+    }
+    private fun resetPageCount() { pageCount = 1  }
+
+
+    override suspend fun fetchDatas(query: String): Resource<List<UiData>> {
+        DebugHelp.l("fetchDatas, query $query, pageCount $pageCount")
+        return fetchFromCache(query)
     }
 
-    override suspend fun fetchNextDatas(page: Int, query: String): Resource<List<UiData>> {
-        DebugHelp.l("fetchNextDatas $page $query")
-        return fetchFromAPI(page, query)
+    override suspend fun fetchNextDatas(query: String): Resource<List<UiData>> {
+        DebugHelp.l("fetchNextDatas, query $query")
+        increasePageCount()
+        return fetchFromAPI(query)
     }
 
-    private suspend fun fetchFromCache(page: Int, query: String): Resource<List<UiData>> {
+    override suspend fun refreshDatas(query: String): Resource<List<UiData>> {
+        DebugHelp.l("refreshDatas, query $query")
+        deleteAll()
+        resetPageCount()
+        return fetchFromAPI(query)
+    }
+
+    private suspend fun fetchFromCache(query: String): Resource<List<UiData>> {
         DebugHelp.l("fetchFromCache")
         var results: List<UiData>? = null
         try {
@@ -44,11 +60,11 @@ class UiDataRepositoryImpl @Inject constructor(
         return if (isNotNullIsNotEmpty(results)) {
             Resource.Success(results!!)
         } else {
-            fetchFromDB(page, query)
+            fetchFromDB(query)
         }
     }
 
-    private suspend fun fetchFromDB(page: Int, query: String): Resource<List<UiData>> {
+    private suspend fun fetchFromDB(query: String): Resource<List<UiData>> {
         DebugHelp.l("fetchFromDB")
         var results: List<UiData>? = null
         try {
@@ -61,27 +77,26 @@ class UiDataRepositoryImpl @Inject constructor(
             cacheDataSource.saveAllToCache(results!!)
             Resource.Success(results)
         } else {
-            fetchFromAPI(page, query)
+            fetchFromAPI(query)
         }
     }
 
-    private suspend fun fetchFromAPI(page: Int, query: String): Resource<List<UiData>> {
-        DebugHelp.l("fetchFromAPI")
+    private suspend fun fetchFromAPI(query: String): Resource<List<UiData>> {
         return try {
-            pageCount++
-            DebugHelp.l("fetchFromAPI $pageCount")
-
             val apiQuery = "$query$IN_QUALIFIER"
+            DebugHelp.l("fetchFromAPI $pageCount, apiQuery $apiQuery")
             val response = remoteDataSource.fetchAllApi(pageCount, apiQuery)
             handleResponse(response)
         } catch (exception: Exception) {
             val message = exception.message.toString()
+            decreasePageCount()
             DebugHelp.l(message)
             Resource.Error(message)
         }
     }
 
-    private suspend fun handleResponse(response: Response<RawDataResponse>): Resource<List<UiData>> {
+    private suspend fun handleResponse(
+        response: Response<RawDataResponse>): Resource<List<UiData>> {
         DebugHelp.l("handleResponse")
         return if (response.isSuccessful) {
             val body = response.body()
@@ -92,9 +107,8 @@ class UiDataRepositoryImpl @Inject constructor(
                 localDataSource.saveAllToDB(uiDatas)
                 Resource.Success(uiDatas)
             } else {
-                pageCount--
-                if(pageCount == 0) pageCount =1
-                Resource.Error("Error: rawResults null")
+                decreasePageCount()
+                Resource.Error("Error response: rawResults null or empty")
             }
         } else {
             val message = "Response not successful: ${response.errorBody().toString()}" +
@@ -106,14 +120,18 @@ class UiDataRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAll() {
         DebugHelp.l("deleteAll")
+        resetPageCount()
         cacheDataSource.deleteAllInCache()
         localDataSource.deleteAllInDB()
     }
 
     override suspend fun deleteAllCache() {
         DebugHelp.l("deleteAllCache")
+        resetPageCount()
         cacheDataSource.deleteAllInCache()
     }
+
+
 
     private fun isNotNullIsNotEmpty(datas: List<UiData>?) =
         datas != null && datas.isNotEmpty()

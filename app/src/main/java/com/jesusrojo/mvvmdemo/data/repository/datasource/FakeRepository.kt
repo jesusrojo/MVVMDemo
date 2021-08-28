@@ -18,12 +18,15 @@ class FakeRepository : UiDataRepository {
         datas = getFakeListItemsOneTwo().toMutableList()
     }
 
-    override suspend fun fetchDatas(page: Int, query: String): Resource<List<UiData>> =
+    override suspend fun fetchDatas(query: String): Resource<List<UiData>> =
         Resource.Success(getFakeListItemsOneTwo())
 
 
-    override suspend fun fetchNextDatas(page: Int, query: String): Resource<List<UiData>> =
+    override suspend fun fetchNextDatas(query: String): Resource<List<UiData>> =
        Resource.Success(getFakeListRawItemsThreeFour())
+
+    override suspend fun refreshDatas(query: String): Resource<List<UiData>> =
+        Resource.Success(getFakeListItemsOneTwo())
 
 
     override suspend fun deleteAll() {} // nothing

@@ -1,9 +1,7 @@
 package com.jesusrojo.mvvmdemo.presentation.di.hilt
 
 import com.jesusrojo.mvvmdemo.domain.repository.UiDataRepository
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllCacheUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchDatasUseCase
+import com.jesusrojo.mvvmdemo.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +14,27 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideFetchAllUseCase(
+    fun provideFetchDatasUseCase(
         repository: UiDataRepository
     ): FetchDatasUseCase {
         return FetchDatasUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFetchNextDatasUseCase(
+        repository: UiDataRepository
+    ): FetchNextDatasUseCase {
+        return FetchNextDatasUseCase(repository)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideRefreshDatasUseCase(
+        repository: UiDataRepository
+    ): RefreshDatasUseCase {
+        return RefreshDatasUseCase(repository)
     }
 
 

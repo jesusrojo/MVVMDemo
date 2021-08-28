@@ -9,6 +9,6 @@ import javax.inject.Inject
 class FetchNextDatasUseCase @Inject constructor(
     private val repository: UiDataRepository
 ) {
-    suspend fun execute(page: Int, query: String): Resource<List<UiData>> =
-        repository.fetchNextDatas(page, query)
+    suspend fun execute(query: String): Resource<List<UiData>> =
+        repository.fetchNextDatas(query)
 }
