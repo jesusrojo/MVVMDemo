@@ -4,7 +4,7 @@ package com.jesusrojo.mvvmdemo.presentation.viewmodel
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.model.UiData
-import com.jesusrojo.mvvmdemo.data.repository.datasource.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
 import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllCacheUseCase
 import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllUseCase
 import com.jesusrojo.mvvmdemo.domain.usecase.FetchDatasUseCase

@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.jesusrojo.mvvmdemo.data.repository.datasource
+package com.jesusrojo.mvvmdemo.data.repository.fake
 
 import com.jesusrojo.mvvmdemo.data.model.OwnerRawData
 import com.jesusrojo.mvvmdemo.data.model.RawData

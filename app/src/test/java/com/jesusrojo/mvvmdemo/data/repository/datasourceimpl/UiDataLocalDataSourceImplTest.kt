@@ -3,7 +3,7 @@ package com.jesusrojo.mvvmdemo.data.repository.datasourceimpl
 import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.db.UiDataDAO
 import com.jesusrojo.mvvmdemo.data.model.UiData
-import com.jesusrojo.mvvmdemo.data.repository.datasource.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
 import com.jesusrojo.mvvmdemo.utilunittests.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever

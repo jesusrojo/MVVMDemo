@@ -1,7 +1,7 @@
 package com.jesusrojo.mvvmdemo.data.model
 
 import com.google.common.truth.Truth.assertThat
-import com.jesusrojo.mvvmdemo.data.repository.datasource.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
 import com.jesusrojo.mvvmdemo.utilunittests.BaseUnitTest
 
 import org.junit.Test

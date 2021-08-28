@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.api.RawDataApiService
 import com.jesusrojo.mvvmdemo.data.model.RawData
 import com.jesusrojo.mvvmdemo.data.model.RawDataResponse
-import com.jesusrojo.mvvmdemo.data.repository.datasource.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
 
 import com.jesusrojo.mvvmdemo.utilunittests.mock
 import com.nhaarman.mockitokotlin2.verify

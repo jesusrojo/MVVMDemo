@@ -3,7 +3,7 @@ package com.jesusrojo.mvvmdemo.data.repository
 import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.model.MapperRawToUiData
 import com.jesusrojo.mvvmdemo.data.model.RawDataResponse
-import com.jesusrojo.mvvmdemo.data.repository.datasource.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
 import com.jesusrojo.mvvmdemo.data.repository.datasource.UiDataCacheDataSource
 import com.jesusrojo.mvvmdemo.data.repository.datasource.UiDataLocalDataSource
 import com.jesusrojo.mvvmdemo.data.repository.datasource.UiDataRemoteDataSource
