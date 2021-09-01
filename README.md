@@ -5,34 +5,35 @@ The app fetch `Repos` from the [Github-Api][1].
 The Endpoint is [here][2].
 
 Use:
-- [Kotlin][KOTLIN]
-- [Coroutines][COROUTINES]
-- [JetPack][JETPACK]
-- [MVVM Architecture][ARCHITECTURE]
-- [Data binding][DATA_BINDING]
-- [Navigation][NAVIGATION]
-- [Hilt][HILT] for DI. [Hilt Training][HILT_TRAINING]. [Hilt Release][HIL_RELEASE].
-- [Room][ROOM] for local database.
-- [Glide][GLIDE] for image loading.
-- [Retrofit][RETROFIT] for REST api communication.
-- [Retrofit Mock][RETROFIT_MOCK] for creating a fake API implementation for tests.
-- [Espresso][ESPRESSO] for UI tests.
-- [Mockito][MOCKITO] for mocking in tests.
-- [Barista][BARISTA]
-- [Unit Tests][UNIT_TEST]
-- [Leak Canary][LEAK_CANARY]
-- [Timber][TIMBER]
+* [Kotlin][KOTLIN]
+* [Coroutines][COROUTINES]
+* [JetPack][JETPACK]
+* [MVVM Architecture][ARCHITECTURE]
+* [Data binding][DATA_BINDING]
+* [Navigation][NAVIGATION]
+* [Hilt][HILT] for DI. [Hilt Training][HILT_TRAINING]. [Hilt Release][HIL_RELEASE].
+* [Room][ROOM] for local database.
+* [Glide][GLIDE] for image loading.
+* [Retrofit][RETROFIT] for REST api communication.
+* [Retrofit Mock][RETROFIT_MOCK] for creating a fake API implementation for tests.
+* [Espresso][ESPRESSO] for UI tests.
+* [Mockito][MOCKITO] for mocking in tests.
+* [Barista][BARISTA]
+* [Unit Tests][UNIT_TEST]
+* [Leak Canary][LEAK_CANARY]
+* [Timber][TIMBER]
+* [SearchManager][SEARCH_MANAGER]
 
-- UseCases
-  - FetchDatasUseCase
-  - FetchNextDatasUseCase
-  - RefreshDatasUseCase
-  - DeleteAllUseCase
-  - DeleteAllCacheUseCase
-- Repositories:
-  - CacheRepository (memory)
-  - LocalRepository (Room)
-  - RemoteRepository (Retrofit)
+* UseCases
+  * FetchDatasUseCase
+  * FetchNextDatasUseCase
+  * RefreshDatasUseCase
+  * DeleteAllUseCase
+  * DeleteAllCacheUseCase
+* Repositories:
+  * CacheRepository (memory)
+  * LocalRepository (Room)
+  * RemoteRepository (Retrofit)
 
 
 [KOTLIN]: https://kotlinlang.org/docs/home.html
@@ -68,6 +69,7 @@ Use:
 
 [LEAK_CANARY]: https://github.com/square/leakcanary
 [TIMBER]: https://github.com/JakeWharton/timber
+[SEARCH_MANAGER]: https://developer.android.com/reference/android/app/SearchManager
 
 [1]: https://api.github.com/
 [2]: https://api.github.com/search/repositories?sort=stars&q=Kotlin:name,description&page=1
