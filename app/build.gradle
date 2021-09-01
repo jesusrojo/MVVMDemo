@@ -71,25 +71,25 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    // HILT https://github.com/googlecodelabs/android-hilt
+    // HILT
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     //implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     // HILT testing
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-//    // Make Hilt generate code in the androidTest folder
+    // Make Hilt generate code in the androidTest folder
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    // LEAK_CANARY https://github.com/square/leakcanary
+    // LEAK_CANARY
     def leak_canary_version = "1.6.2" // (last 2.6)
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
     debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leak_canary_version"
 
-    // TIMBER https://github.com/JakeWharton/timber
+    // TIMBER
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    // ROOM https://developer.android.com/jetpack/androidx/releases/room
+    // ROOM
     def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -101,7 +101,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
-    // GLIDE https://github.com/bumptech/glide
+    // GLIDE
     def glide_version = "4.12.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
@@ -110,7 +110,7 @@ dependencies {
         exclude group: 'glide-parent'
     }
 
-    // RETROFIT https://github.com/square/retrofit
+    // RETROFIT
     def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
@@ -144,7 +144,6 @@ dependencies {
     //androidTestImplementation 'com.android.support.test:rules:0.5'
 
     // BARISTA NEEDS minSdkVersion 19, AND jcenter() IN build.gradle(project)
-    // https://github.com/AdevintaSpain/Barista
     androidTestImplementation('com.schibsted.spain:barista:3.6.0') {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
