@@ -1,15 +1,14 @@
 #### MVVMDemo
 
-A playground project using [Android JetPack app architecture guide][1]
-The app fetch `Repos` from the [Github Api][2].
-The Endpoint is [here][3].
-
+A playground project using [Android-JetPack][JETPACK_GUIDE] architecture guide.
+The app fetch `Repos` from the [Github-Api][1].
+The Endpoint is [here][2].
 
 Use:
 - [Kotlin][KOTLIN]
 - [Coroutines][COROUTINES]
 - [JetPack][JETPACK]
-- [Architecture MVVM][ARCHITECTURE]
+- [MVVM Architecture][ARCHITECTURE]
 - [Data binding][DATA_BINDING]
 - [Navigation][NAVIGATION]
 - [Hilt][HILT] for DI. [Hilt Training][HILT_TRAINING]. [Hilt Release][HIL_RELEASE].
@@ -39,7 +38,13 @@ Use:
 [KOTLIN]: https://kotlinlang.org/docs/home.html
 [COROUTINES]: https://developer.android.com/kotlin/coroutines
 
+[SUPPORT_LIB]: https://developer.android.com/topic/libraries/support-library/index.html
+[ARCH]: https://developer.android.com/arch
+[MATERIAL_DESIGN]: https://material.io/design/introduction#theming
+
 [JETPACK]: https://developer.android.com/jetpack
+[JETPACK_GUIDE]: https://developer.android.com/jetpack/guide
+
 [ARCHITECTURE]: https://developer.android.com/jetpack/guide
 [HILT]: https://github.com/googlecodelabs/android-hilt
 [HILT_TRAINING]: https://developer.android.com/training/dependency-injection/hilt-android
@@ -64,10 +69,7 @@ Use:
 [LEAK_CANARY]: https://github.com/square/leakcanary
 [TIMBER]: https://github.com/JakeWharton/timber
 
-[1]: https://developer.android.com/jetpack/guide).
-[2]: https://api.github.com/
-[3]: https://api.github.com/search/repositories?sort=stars&q=Kotlin:name,description&page=1
+[1]: https://api.github.com/
+[2]: https://api.github.com/search/repositories?sort=stars&q=Kotlin:name,description&page=1
 
 
-[SUPPORT_LIB]: https://developer.android.com/topic/libraries/support-library/index.html
-[ARCH]: https://developer.android.com/arch
