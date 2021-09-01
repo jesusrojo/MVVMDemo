@@ -3,6 +3,7 @@ package com.jesusrojo.mvvmdemo.working
 import androidx.lifecycle.*
 import com.jesusrojo.mvvmdemo.data.model.UiData
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -10,7 +11,7 @@ import kotlinx.coroutines.launch
 
 //https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Kotlin%20Flow%20on%20Android%20-%20Quick%20guide
 class FlowApiService(){
-    suspend fun fetchDatas(): List<UiData> = FakeRepository.getFakeListItemsOneTwo()
+    suspend fun fetchDatas(): List<UiData> = FakeUtil.getFakeListItemsOneTwo()
 }
 
 class FlowRepository(private val api: FlowApiService) {

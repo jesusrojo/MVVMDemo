@@ -4,7 +4,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import com.jesusrojo.mvvmdemo.utilsandroidtests.BaseUITest
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -33,7 +33,7 @@ class UiDataDaoTest: BaseUITest() {
     @Test
     fun saveTest() = runBlocking {
 
-        val enties = FakeRepository.getFakeListItemsOneTwo()
+        val enties = FakeUtil.getFakeListItemsOneTwo()
 
         dao.insertAll(enties)
 
@@ -45,7 +45,7 @@ class UiDataDaoTest: BaseUITest() {
     @Test
     fun deleteTest() = runBlocking {
 
-        val enties = FakeRepository.getFakeListItemsOneTwo()
+        val enties = FakeUtil.getFakeListItemsOneTwo()
 
         dao.insertAll(enties)
 

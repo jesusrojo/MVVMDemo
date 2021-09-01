@@ -7,6 +7,7 @@ import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
 import com.jesusrojo.mvvmdemo.data.repository.datasource.UiDataCacheDataSource
 import com.jesusrojo.mvvmdemo.data.repository.datasource.UiDataLocalDataSource
 import com.jesusrojo.mvvmdemo.data.repository.datasource.UiDataRemoteDataSource
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import com.jesusrojo.mvvmdemo.domain.repository.UiDataRepository
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
@@ -27,7 +28,7 @@ class UiDataRepositoryImplTest {
     private val cacheDataSource: UiDataCacheDataSource = mock()
     private val mapper: MapperRawToUiData = mock()
 
-    private val datas = FakeRepository.getFakeListRawDataOneTwo()
+    private val datas = FakeUtil.getFakeListRawDataOneTwo()
     private val rawDataResponse = RawDataResponse(false, datas, 10)
     private val response: Response<RawDataResponse> = Response.success(rawDataResponse)
 
@@ -75,7 +76,7 @@ class UiDataRepositoryImplTest {
     @Test
     fun fetchDatas_returnSuccess() = runBlockingTest {
 
-        val datas = FakeRepository.getFakeListItemsOneTwo()
+        val datas = FakeUtil.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(datas)
 
         val resourceResult = sut.fetchDatas(query)
@@ -88,7 +89,7 @@ class UiDataRepositoryImplTest {
     @Test
     fun fetchDatas_returnError() = runBlockingTest {
 
-        val datas = FakeRepository.getFakeListItemsOneTwo()
+        val datas = FakeUtil.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(datas)
 
         val resourceResult = sut.fetchDatas(query)
@@ -101,7 +102,7 @@ class UiDataRepositoryImplTest {
     @Test
     fun fetchUiData_callCache_listOK() = runBlockingTest {
 
-        val datas = FakeRepository.getFakeListItemsOneTwo()
+        val datas = FakeUtil.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(datas)
 
         val results = sut.fetchDatas(query)
@@ -112,7 +113,7 @@ class UiDataRepositoryImplTest {
 
     @Test
     fun fetchUiData_callCache_callLocal_listOK() = runBlockingTest {
-        val datas = FakeRepository.getFakeListItemsOneTwo()
+        val datas = FakeUtil.getFakeListItemsOneTwo()
         whenever(cacheDataSource.fetchAllFromCache()).thenReturn(null)
         whenever(localDataSource.fetchAllInDB()).thenReturn(datas)
         sut.fetchDatas(query)
