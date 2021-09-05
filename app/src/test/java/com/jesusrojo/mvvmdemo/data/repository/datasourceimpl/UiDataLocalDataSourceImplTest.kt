@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.db.UiDataDAO
 import com.jesusrojo.mvvmdemo.data.model.UiData
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import com.jesusrojo.mvvmdemo.utilunittests.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -49,7 +50,7 @@ class UiDataLocalDataSourceImplTest {
     @Test
     fun fetchAllInDB_returnFakeListMocked() = runBlockingTest {
 
-        val datas = FakeRepository.getFakeListItemsOneTwo()
+        val datas = FakeUtil.getFakeListItemsOneTwo()
         whenever(myDAO.fetchAll()).thenReturn(datas)
 
         val results = sut.fetchAllInDB()

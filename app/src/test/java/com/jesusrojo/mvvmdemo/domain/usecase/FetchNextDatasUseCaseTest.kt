@@ -2,6 +2,7 @@ package com.jesusrojo.mvvmdemo.domain.usecase
 
 import com.google.common.truth.Truth
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import com.jesusrojo.mvvmdemo.domain.repository.UiDataRepository
 import com.jesusrojo.mvvmdemo.util.Resource
 import com.nhaarman.mockitokotlin2.mock
@@ -30,7 +31,7 @@ class FetchNextDatasUseCaseTest {
     @Test
     fun execute_callRepository_listOK() = runBlockingTest {
 
-        val datas = FakeRepository.getFakeListItemsOneTwo()
+        val datas = FakeUtil.getFakeListItemsOneTwo()
         whenever(repository.fetchNextDatas(query)).thenReturn(Resource.Success(datas))
 
         val results = sut.execute(query)

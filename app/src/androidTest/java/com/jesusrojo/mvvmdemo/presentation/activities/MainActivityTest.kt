@@ -17,6 +17,7 @@ class MainActivityTest: BaseUITest(){
 
     @Test
     fun displayLayoutInitial() {
+        Thread.sleep(500)
         assertDisplayed(R.id.swipe_layout_container_items)
         assertDisplayed(R.id.recycler_view_items)
     }

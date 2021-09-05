@@ -2,12 +2,13 @@ package com.jesusrojo.mvvmdemo.data.model
 
 import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import org.junit.Test
 
 
 class UiDataTest {
 
-    private val uiDataFake = FakeRepository.getFakeUiData("Testing")
+    private val uiDataFake = FakeUtil.getFakeUiData("Testing")
     private val sut = uiDataFake
 
     @Test

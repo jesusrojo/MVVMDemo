@@ -42,6 +42,8 @@ android {
     }
     testOptions {
         animationsDisabled = true
+        //https://stackoverflow.com/questions/58303961/kotlin-coroutine-unit-test-fails-with-module-with-the-main-dispatcher-had-faile
+        unitTests.returnDefaultValues = true
     }
     buildFeatures {
         viewBinding true

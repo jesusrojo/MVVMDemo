@@ -2,6 +2,7 @@ package com.jesusrojo.mvvmdemo.data.model
 
 import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 import com.jesusrojo.mvvmdemo.utilunittests.BaseUnitTest
 
 import org.junit.Test
@@ -11,7 +12,7 @@ class MapperRawToUiDataTest: BaseUnitTest() {
 
     private val sut = MapperRawToUiData()
 
-    private val rawData = FakeRepository.getFakeRawData("MapperTest")
+    private val rawData = FakeUtil.getFakeRawData("MapperTest")
     private val uiData = sut(listOf(rawData))
     private val userIndexZero = uiData[0]
 

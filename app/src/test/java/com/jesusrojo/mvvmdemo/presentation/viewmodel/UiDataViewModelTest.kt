@@ -5,76 +5,98 @@ import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.jesusrojo.mvvmdemo.data.model.UiData
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllCacheUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.DeleteAllUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchDatasUseCase
-import com.jesusrojo.mvvmdemo.domain.usecase.FetchNextDatasUseCase
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
+import com.jesusrojo.mvvmdemo.domain.usecase.*
 import com.jesusrojo.mvvmdemo.util.Resource
 import com.jesusrojo.mvvmdemo.utilunittests.BaseUnitTest
 import com.jesusrojo.mvvmdemo.utilunittests.captureValues
-import com.jesusrojo.mvvmdemo.utilunittests.getOrAwaitValue
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runBlockingTest
+
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.mockito.BDDMockito.*
+import org.mockito.Mock
 
 
-class UiDataViewModelTest: BaseUnitTest() {
+class UiDataViewModelTest : BaseUnitTest() {
 
     private val fakeRepository = FakeRepository()
 
     private val fetchUseCase = FetchDatasUseCase(fakeRepository)
     private val fetchNextDatasUseCase = FetchNextDatasUseCase(fakeRepository)
+    private var refreshDatasUseCase = RefreshDatasUseCase(fakeRepository)
     private val deleteAllUseCase = DeleteAllUseCase(fakeRepository)
     private val deleteAllCacheUseCased = DeleteAllCacheUseCase(fakeRepository)
-    private val ioDispatcher = Dispatchers.IO
+    private val dispatcher = Dispatchers.Unconfined
 
     private lateinit var sutFake: UiDataViewModel
 
-    private val observer: Observer<Resource<List<UiData>>> = mock()
+//    @Mock lateinit var observer: Observer<Resource<*>>
+    private val observer: Observer<Resource<*>> = mock()
 
     @Before
-    fun setUp(){
+    fun setUp() {
+        sutFake = UiDataViewModel(
+            fetchUseCase, fetchNextDatasUseCase, refreshDatasUseCase,
+            deleteAllUseCase, deleteAllCacheUseCased, dispatcher
+        )
 
-        sutFake = UiDataViewModel(fetchUseCase, fetchNextDatasUseCase,
-            deleteAllUseCase, deleteAllCacheUseCased, ioDispatcher)
+        sutFake.resourceUiDatas.observeForever(observer)
     }
 
-    @Test
-    fun fail_fetchNextDatas_loadingShow_data() =
-        coroutinesTestRule.testDispatcher.runBlockingTest {
+    @After
+    fun tearDown() {
+        sutFake.resourceUiDatas.removeObserver(observer)
+        testCoroutineDispatcher.cleanupTestCoroutines()
+    }
 
-            val state = sutFake.resourceUiDatas
-            state.observeForever(observer)
+
+    @Test
+    fun fetchNextDatas_success() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
 
             sutFake.fetchNextDatas()
 
-            val resultResource = state.getOrAwaitValue()
-            assertThat(resultResource.data).isNotNull()
-            assertThat(resultResource.data?.size).isEqualTo(2)
+            val resultResource = sutFake.resourceUiDatas
+
+            assertThat(resultResource?.value?.data).isNotNull()
+            assertThat(resultResource?.value?.data?.size).isEqualTo(2)
+
+            verify(observer, times(1))
+                .onChanged(isA(Resource.Loading::class.java))
+            verify(observer, times(1))
+                .onChanged(isA(Resource.Success::class.java))
+            verify(observer, never()).onChanged(isA(Resource.Error::class.java))
+
+            verifyNoMoreInteractions(observer)
         }
 
 
     @Test
-    fun fail_fetchDatas_loadingShow_data() =
+    fun fetchDatas_success() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
-
-            val state = sutFake.resourceUiDatas
-            state.observeForever(observer)
 
             sutFake.fetchDatas()
 
-            var resultResource = state.getOrAwaitValue()
-          //  assertThat(resultResource.data).isEqualTo(null)// todo FAIL
+            val state = sutFake.resourceUiDatas
 
-            resultResource = state.getOrAwaitValue()
-            assertThat(resultResource.data).isNotNull()
-            assertThat(resultResource.data?.size).isEqualTo(2)
+            assertThat(state.value?.data).isEqualTo(FakeUtil.getFakeListItemsOneTwo())
+
+            verify(observer, times(1))
+                .onChanged(isA(Resource.Loading::class.java))
+            verify(observer, times(1))
+                .onChanged(isA(Resource.Success::class.java))
+            verify(observer, never()).onChanged(isA(Resource.Error::class.java))
+
+            verifyNoMoreInteractions(observer)
         }
 
+
     @Test
-    fun fetchDatas_withCAPTURE_VALUES() =
+    fun fetchDatas_TESTE_WITH_CAPTURE_VALUES() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
 
             val state = sutFake.resourceUiDatas
@@ -89,23 +111,11 @@ class UiDataViewModelTest: BaseUnitTest() {
             assertThat(list[0]).isInstanceOf(Resource.Success::class.java)
         }
 
-    @Test
-    fun fetchDatas_loadExpectedDatas() =
-        coroutinesTestRule.testDispatcher.runBlockingTest {
 
-            sutFake.fetchDatas()
-
-            val state = sutFake.resourceUiDatas
-
-            assertThat(state.value?.data).isNull()
-        }
-
-
+    // VARIABLES
     @Test
     fun testDefaultVariables() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
-            val state = sutFake.resourceUiDatas
-            state.observeForever(observer)
             sutFake.fetchDatas()
             assertThat(sutFake.query).isEqualTo("Kotlin")
         }

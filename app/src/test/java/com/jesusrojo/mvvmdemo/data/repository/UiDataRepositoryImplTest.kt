@@ -21,7 +21,7 @@ import retrofit2.Response
 
 class UiDataRepositoryImplTest {
 
-    private val page = 0
+    private val page = 1
     private val query = "Kotlin"
     private val remoteDataSource: UiDataRemoteDataSource = mock()
     private val localDataSource: UiDataLocalDataSource = mock()
@@ -52,7 +52,7 @@ class UiDataRepositoryImplTest {
     @Test
     fun fetchNextDatas_call_fetchAllApi() = runBlockingTest {
         sut.fetchNextDatas(query)
-        verify(remoteDataSource, times(1)).fetchAllApi(page,
+        verify(remoteDataSource, times(1)).fetchAllApi(2, // SECOND INTERACTION
             query + "in:name,description") //IN_QUALIFIER
     }
 

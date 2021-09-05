@@ -5,6 +5,7 @@ import com.jesusrojo.mvvmdemo.data.api.RawDataApiService
 import com.jesusrojo.mvvmdemo.data.model.RawData
 import com.jesusrojo.mvvmdemo.data.model.RawDataResponse
 import com.jesusrojo.mvvmdemo.data.repository.fake.FakeRepository
+import com.jesusrojo.mvvmdemo.data.repository.fake.FakeUtil
 
 import com.jesusrojo.mvvmdemo.utilunittests.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -57,7 +58,7 @@ class UiDataRemoteDataSourceImplTest {
     @Test
     fun fetchUiData_withListFakeMocked_isReturnedByService() = runBlockingTest {
 
-        val items: List<RawData> = FakeRepository.getFakeListRawDataOneTwo()
+        val items: List<RawData> = FakeUtil.getFakeListRawDataOneTwo()
         val body = RawDataResponse(false, items, 10)
         val response: Response<RawDataResponse> = Response.success(body)
         whenever(service.fetchRawDatas(page, query)).thenReturn(response)
